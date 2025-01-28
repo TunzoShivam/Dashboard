@@ -220,7 +220,7 @@ if not tasks_df.empty:
                 self.set_fill_color(200, 200, 200)
                 self.set_text_color(0, 0, 0)
                 self.set_font("Arial", size=8)
-                self.cell(110, 8, "Task", border=1, align="C", fill=True)
+                self.cell(110, 8, "Assigned Task", border=1, align="C", fill=True)
                 self.cell(30, 8, "Status", border=1, align="C", fill=True)
                 self.cell(40, 8, "Responsible Person", border=1, align="C", fill=True)
                 self.ln()
