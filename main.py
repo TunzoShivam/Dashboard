@@ -6,6 +6,8 @@ from datetime import date, datetime
 import os
 from PIL import Image
 
+
+
 # Set the page configuration to wide layout
 st.set_page_config(
     page_title="Daily Dashboard ",
@@ -53,7 +55,16 @@ with col2:
     logo = Image.open("logo/sketch.png")
     st.image(logo, width=100)
 
-st.title("Daily Dashboard SKETCHCOM Engineering & Design")
+import streamlit as st
+
+# Centered title with HTML
+import streamlit as st
+
+# Centered title with custom font sizes using HTML
+st.markdown("<h1 style='text-align: center; font-size: 30px; color:blue;'>SKETCHCOM Engineering & Design</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; font-size: 25px;'>Daily Dashboard</h2>", unsafe_allow_html=True)
+
+
 
 # Step 2: Date Selection (Non-editable, automatically updating)
 selected_date = datetime.now(timezone("Asia/Kolkata")).date()  # Get current date in IST
@@ -190,11 +201,11 @@ if not tasks_df.empty:
                 ist = timezone("Asia/Kolkata")
                 current_time_ist = datetime.now(ist).strftime('%d %B %Y, %I:%M %p')  # Date and Time in IST
                 
-                self.set_font("Arial", style="B", size=20)  # Bold and larger size for "SKETCHCOM"
+                self.set_font("Arial", style="B", size=14)  # Bold and larger size for "SKETCHCOM"
                 self.cell(180, 8, "SKETCHCOM Engineering and Design", ln=True, align="C")
 
                  # Second line: Regular font size
-                self.set_font("Arial", style="B", size=14)  # Regular font size for "DAILY DASHBOARD"
+                self.set_font("Arial", style="B", size=12)  # Regular font size for "DAILY DASHBOARD"
                 self.cell(180, 8, "DAILY DASHBOARD", ln=True, align="C")
                 self.set_font("Arial", style="B", size=10)
                 self.cell(180, 8, f"{current_time_ist}", ln=True, align="R")  # Display date and time in IST
@@ -243,3 +254,9 @@ if not tasks_df.empty:
         st.download_button("Download PDF", data=pdf_data, file_name=filename, mime="application/pdf")
 else:
     st.info("No tasks available to generate a PDF.")
+    
+st.markdown("")
+st.markdown("")
+st.markdown("")
+st.markdown("")
+st.markdown("<h2 style='text-align: center; font-size: 15px;'>Terms of Use | Privacy and Security Copyright 2025, SKETCHCOM Engineering & Design Pvt. Ltd. | All Rights Reserved</h2>", unsafe_allow_html=True)
