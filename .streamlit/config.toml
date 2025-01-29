@@ -8,5 +8,5 @@ primaryColor = '#FF8C02' # Bright Orange
 backgroundColor = '#00325B' # Dark Blue
 
 secondaryBackgroundColor = '#55B2FF' # Lighter Blue
-textColor="#000000"  # Black text color for contrast
+textColor="#FFFFFF"  # Black text color for contrast
 font="sans serif"  # Use sans-serif font
