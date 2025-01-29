@@ -6,10 +6,6 @@ from datetime import date, datetime
 import os
 from PIL import Image
 
-# Check if the user is logged in before showing the main app
-if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.warning("You need to login first!")
-    st.stop()  # Stop the execution if not logged in
 
 # Set the page configuration to wide layout
 st.set_page_config(
