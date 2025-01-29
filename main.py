@@ -10,7 +10,7 @@ from PIL import Image
 
 # Set the page configuration to wide layout
 st.set_page_config(
-    page_title="Daily Dashboard ",
+    page_title="Daily Planner ",
     page_icon="📝",
     layout="wide",  # This makes the webpage use the full width
     initial_sidebar_state="expanded"  # Sidebar will start expanded
@@ -62,7 +62,7 @@ import streamlit as st
 
 # Centered title with custom font sizes using HTML
 st.markdown("<h1 style='text-align: center; font-size: 30px; color:blue;'>SKETCHCOM Engineering & Design</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center; font-size: 25px;'>Daily Dashboard</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; font-size: 25px;'>Daily Planner</h2>", unsafe_allow_html=True)
 
 
 
@@ -206,7 +206,7 @@ if not tasks_df.empty:
 
                  # Second line: Regular font size
                 self.set_font("Arial", style="B", size=12)  # Regular font size for "DAILY DASHBOARD"
-                self.cell(180, 8, "DAILY DASHBOARD", ln=True, align="C")
+                self.cell(180, 8, "DAILY Planner", ln=True, align="C")
                 self.set_font("Arial", style="B", size=10)
                 self.cell(180, 8, f"{current_time_ist}", ln=True, align="R")  # Display date and time in IST
                 self.ln(5)
