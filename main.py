@@ -289,7 +289,9 @@ def main_app():
             st.download_button("Download PDF", data=pdf_data, file_name=filename, mime="application/pdf")
     else:
         st.info("No tasks available to generate a PDF.")
-    
+
+    st.markdown("")
+    st.markdown("")
     if st.button("Logout"):
         st.session_state["logged_in"] = False
         st.session_state["admin_logged_in"] = False
