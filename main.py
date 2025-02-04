@@ -171,7 +171,7 @@ def main_app():
             responsible_person = selected_responsible
 
         # Task Status
-        task_status = st.selectbox("Task Status", ["Pending", "In Progress", "Completed"])
+        task_status = st.selectbox("Task Status", ["Assigned", "Pending", "Completed"])
 
         col1, col2, col3 = st.columns(3)
 
@@ -264,8 +264,8 @@ def main_app():
                         self.cell(110, 8, row["Task"], border=1, align="l")
                         if row["Status"] == "Pending":
                             self.set_fill_color(255, 0, 0)
-                        elif row["Status"] == "In Progress":
-                            self.set_fill_color(255, 255, 0)
+                        elif row["Status"] == "Assigned":
+                            self.set_fill_color(255, 255, 255)
                         elif row["Status"] == "Completed":
                             self.set_fill_color(0, 255, 0)
                         self.cell(30, 8, row["Status"], border=1, align="C", fill=True)
