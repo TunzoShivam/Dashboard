@@ -15,15 +15,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"  # Sidebar will start expanded
 )
 
-# Add custom CSS to hide the GitHub icon
-hide_github_icon = """
-#GithubIcon {
-  visibility: hidden;
-}
-"""
-st.markdown(hide_github_icon, unsafe_allow_html=True)
-
-
     # Directories for tasks and projects
 TASKS_DIR = "tasks"
 PROJECTS_FILE = "projects.csv"
