@@ -35,7 +35,7 @@ if not os.path.exists(user_data_file):
 def load_projects():
     if os.path.exists(PROJECTS_FILE):
         return pd.read_csv(PROJECTS_FILE)["Project"].tolist()
-    return ["DUDP", "JAFURAH-II", "BULL HANINE", "IT", "ADMIN/HR"]
+    return ["SK0066-AL MARJAN DCP","SK0067 - DUDP","SK0068 - 3D MODELLING (AVEVA E3D)","SK0064-CRPO78B", "SK0065-JAFURAH GCP Phase2", "SK0063- BUL HANINE PS3", "IT", "ADMIN","HR","Business Development","Finance & Accounts","Management","SK0061-CRPO98","SK0062 - NASMATEL - MC","SK0069 - NASMATEL - AA"]
 
 def save_projects(projects):
     pd.DataFrame({"Project": projects}).to_csv(PROJECTS_FILE, index=False)
