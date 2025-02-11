@@ -225,61 +225,70 @@ def main_app():
     # Step 5: Generate PDF (with IST timezone)
     if not tasks_df.empty:
         if st.button("Generate PDF"):
-            class PDF(FPDF):
-                def header(self):
-                    logo_path = "logo/sketch.png"
-                    self.image(logo_path, 5, 4, 16)
-                    self.set_font("Arial", style="B", size=14)
-
-                    # Get the current time in IST
-                    ist = timezone("Asia/Kolkata")
-                    current_time_ist = datetime.now(ist).strftime('%d %B %Y, %I:%M %p')  # Date and Time in IST
-                    
-                    self.set_font("Arial", style="B", size=14)  # Bold and larger size for "SKETCHCOM"
-                    self.cell(180, 8, "SKETCHCOM Engineering and Design", ln=True, align="C")
-
-                    # Second line: Regular font size
-                    self.set_font("Arial", style="B", size=12)  # Regular font size for "DAILY DASHBOARD"
-                    self.cell(180, 8, "DAILY Planner", ln=True, align="C")
-                    self.set_font("Arial", style="B", size=10)
-                    self.cell(180, 8, f"{current_time_ist}", ln=True, align="R")  # Display date and time in IST
-                    self.ln(5)
-
-                def add_project_section(self, project, tasks):
-                    self.set_fill_color(255, 0, 0)
-                    self.set_text_color(255, 255, 255)
-                    self.set_font("Arial", style="B", size=10)
-                    self.cell(180, 8, f"Project: {project}", ln=True, align="L", fill=True)
-
-                    self.set_fill_color(200, 200, 200)
-                    self.set_text_color(0, 0, 0)
-                    self.set_font("Arial", size=8)
-                    self.cell(110, 8, "Assigned Task", border=1, align="C", fill=True)
-                    self.cell(30, 8, "Status", border=1, align="C", fill=True)
-                    self.cell(40, 8, "Responsible Person", border=1, align="C", fill=True)
-                    self.ln()
-
-                    for _, row in tasks.iterrows():
-                        self.cell(110, 8, row["Task"], border=1, align="l")
-                        if row["Status"] == "Pending":
-                            self.set_fill_color(255, 0, 0)
-                        elif row["Status"] == "Assigned":
-                            self.set_fill_color(255, 255, 255)
-                        elif row["Status"] == "Completed":
-                            self.set_fill_color(0, 255, 0)
-                        self.cell(30, 8, row["Status"], border=1, align="C", fill=True)
-                        responsible = str(row["Responsible"]) if not pd.isna(row["Responsible"]) else "N/A"
-                        self.cell(40, 8, responsible, border=1, align="C")
+           class PDF(FPDF):
+                    def header(self):
+                        logo_path = "logo/sketch.png"
+                        self.image(logo_path, 5, 4, 16)
+                        self.set_font("Arial", style="B", size=14)
+                
+                        # Get the current time in IST
+                        ist = timezone("Asia/Kolkata")
+                        current_time_ist = datetime.now(ist).strftime('%d %B %Y, %I:%M %p')  # Date and Time in IST
+                        
+                        self.set_font("Arial", style="B", size=14)  # Bold and larger size for "SKETCHCOM"
+                        self.cell(180, 8, "SKETCHCOM Engineering and Design", ln=True, align="C")
+                
+                        # Second line: Regular font size
+                        self.set_font("Arial", style="B", size=12)  # Regular font size for "DAILY DASHBOARD"
+                        self.cell(180, 8, "DAILY Planner", ln=True, align="C")
+                        self.set_font("Arial", style="B", size=10)
+                        self.cell(180, 8, f"{current_time_ist}", ln=True, align="R")  # Display date and time in IST
+                        self.ln(5)
+                
+                    def footer(self):
+                        """ Adds a footer with page number and total number of pages. """
+                        self.set_y(-15)  # Position at 15mm from bottom
+                        self.set_font("Arial", size=8)
+                        self.set_text_color(128)  # Gray color
+                        self.cell(0, 10, f"Page {self.page_no()} of {{nb}}", align="C")
+                
+                    def add_project_section(self, project, tasks):
+                        self.set_fill_color(255, 0, 0)
+                        self.set_text_color(255, 255, 255)
+                        self.set_font("Arial", style="B", size=10)
+                        self.cell(180, 8, f"Project: {project}", ln=True, align="L", fill=True)
+                
+                        self.set_fill_color(200, 200, 200)
+                        self.set_text_color(0, 0, 0)
+                        self.set_font("Arial", size=8)
+                        self.cell(110, 8, "Assigned Task", border=1, align="C", fill=True)
+                        self.cell(30, 8, "Status", border=1, align="C", fill=True)
+                        self.cell(40, 8, "Responsible Person", border=1, align="C", fill=True)
                         self.ln()
+                
+                        for _, row in tasks.iterrows():
+                            self.cell(110, 8, row["Task"], border=1, align="l")
+                            if row["Status"] == "Pending":
+                                self.set_fill_color(255, 0, 0)
+                            elif row["Status"] == "Assigned":
+                                self.set_fill_color(255, 255, 255)
+                            elif row["Status"] == "Completed":
+                                self.set_fill_color(0, 255, 0)
+                            self.cell(30, 8, row["Status"], border=1, align="C", fill=True)
+                            responsible = str(row["Responsible"]) if not pd.isna(row["Responsible"]) else "N/A"
+                            self.cell(40, 8, responsible, border=1, align="C")
+                            self.ln()
+                
+                        self.ln(5)
+                
+                    def generate_pdf(self, data, date):
+                        self.alias_nb_pages()  # Enables {nb} placeholder for total pages
+                        self.add_page()
+                        grouped = data.groupby("Project")
+                        for project, tasks in grouped:
+                            self.add_project_section(project, tasks)
+                        return self.output(dest="S").encode("latin1")
 
-                    self.ln(5)
-
-                def generate_pdf(self, data, date):
-                    self.add_page()
-                    grouped = data.groupby("Project")
-                    for project, tasks in grouped:
-                        self.add_project_section(project, tasks)
-                    return self.output(dest="S").encode("latin1")
 
             pdf = PDF()
             pdf_data = pdf.generate_pdf(tasks_df, selected_date)
